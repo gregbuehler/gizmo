@@ -1,0 +1,46 @@
+{
+  'name': 'Deploy Web',
+  'description': 'Deploys a server, php interpreter, and content',
+  'version': '0.0.1',
+  'contact': 'Greg Buehler <gregory.r.buehler@gmail.com>',
+
+  'actions': [
+    {
+      'description': 'ensure web server with php interpreter is present',
+      'module': 'package',
+      'options': [
+        'state': 'present',
+        'name': 'lamp-server^'
+      ]
+    },
+    {
+      'description': 'ensure web server is started',
+      'module': 'package',
+      'options': [
+        'state': 'enabled',
+        'name': 'apache2'
+      ]
+    },
+    {
+      'description': 'ensure user is created',
+      'module': 'package',
+      'options': [
+        'state': 'enabled',
+        'name': 'apache2'
+      ]
+    },
+    {
+      'description': 'ensure content is current',
+      'module': 'file',
+      'options': [
+        'group': 'foo',
+        'user': 'foo',
+        'attributes': '664',
+        'files': [
+          { 'state': 'absent', 'file': '/var/www/index.html' }
+          { 'state': 'sync', 'file': '/var/www/index.php', 'source': 'index.php' }
+        ]
+      ]
+    },
+  ]
+}
