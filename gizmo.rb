@@ -27,6 +27,9 @@ raise Exception.new("username not provided") if args[:user].nil?
 raise Exception.new("password not provided") if args[:password].nil?
 raise Exception.new("manifest file not provided") if manifest_filename.nil?
 
+# load the manifest
+manifest = JSON.parse(File.read(manifest_filename))
+
 # load up a gizmo and execute
 puts "Gizmo loading up!"
 
@@ -34,4 +37,4 @@ puts "Gizmo loading up!"
 puts "\thost: #{args[:host]}"
 puts "\tuser: #{args[:user]}"
 puts "\tpass: #{args[:password]}"
-puts "\tmanifest_filename: #{manifest_filename}"
+puts "\tmanifest: #{manifest}"
