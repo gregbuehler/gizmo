@@ -6,13 +6,32 @@ class Runner
   end
 
   def prepare()
-    puts "#{@manifest['name']}"
     puts "preparing to apply #{@manifest['name']}@#{@manifest['version']}"
   end
 
   def run()
     @manifest['actions'].each do |action|
       puts "#{action['description']}"
+      case action['module']
+      when "package"
+        puts "\tModule: package"
+        command = "sudo apt-get install #{action['options']['name']}"
+        puts "\t\tRaw Command: #{command}"
+      when "service"
+        puts "\tModule: service"
+        command = "sudo service #{action['options']['name']} #{action['options']['state']}"
+        puts "\t\tRaw Command: #{command}"
+      when "user"
+        puts "\tModule: user"
+        command = "sudo useradd #{action['options']['name']}"
+        puts "\t\tRaw Command: #{command}"
+      when "file"
+        puts "\tModule: file"
+        puts "\t\tTODO"
+      else
+        puts "\tModule: Unknown"
+        puts "\t\tNOOP"
+      end
     end
   end
 end

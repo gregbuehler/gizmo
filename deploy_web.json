@@ -17,16 +17,16 @@
       "description": "ensure web server is started",
       "module": "service",
       "options": {
-        "state": "enabled",
+        "state": "start",
         "name": "apache2"
       }
     },
     {
       "description": "ensure user is created",
-      "module": "package",
+      "module": "user",
       "options": {
-        "state": "enabled",
-        "name": "apache2"
+        "state": "present",
+        "name": "qwerty"
       }
     },
     {
