@@ -1,3 +1,5 @@
+require_relative './modules/package'
+
 class Runner
   attr_accessor :args, :manifest
   def initialize(params = {})
@@ -14,9 +16,7 @@ class Runner
       puts "#{action['description']}"
       case action['module']
       when "package"
-        puts "\tModule: package"
-        command = "sudo apt-get install #{action['options']['name']}"
-        puts "\t\tRaw Command: #{command}"
+        PackageModule.new(action['options']).execute
       when "service"
         puts "\tModule: service"
         command = "sudo service #{action['options']['name']} #{action['options']['state']}"
