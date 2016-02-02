@@ -1,6 +1,8 @@
 require 'optparse'
 require 'json'
 
+require './lib/runner'
+
 # capture args
 args = {}
 OptionParser.new do |opts|
@@ -32,9 +34,6 @@ manifest = JSON.parse(File.read(manifest_filename))
 
 # load up a gizmo and execute
 puts "Gizmo loading up!"
-
-
-puts "\thost: #{args[:host]}"
-puts "\tuser: #{args[:user]}"
-puts "\tpass: #{args[:password]}"
-puts "\tmanifest: #{manifest}"
+g = Runner.new({:args => args, :manifest => manifest})
+g.prepare()
+g.run()
