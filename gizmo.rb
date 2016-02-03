@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 require 'optparse'
 require 'json'
 
@@ -12,11 +14,15 @@ OptionParser.new do |opts|
     args[:host] = host
   end
 
+  opts.on("-p", "--port PORT", "Target port") do |port|
+    args[:port] = port || "22"
+  end
+
   opts.on("-u", "--user USERNAME", "connect as user") do |user|
     args[:user] = user
   end
 
-  opts.on("-p", "--password PASSWORD", "password to use") do |password|
+  opts.on("-k", "--password PASSWORD", "password to use") do |password|
     args[:password] = password
   end
 end.parse!
