@@ -3,6 +3,10 @@
 require 'optparse'
 require 'json'
 
+require 'rubygems'
+require 'bundler'
+Bundler.setup(:default)
+
 require './lib/runner'
 
 # capture args

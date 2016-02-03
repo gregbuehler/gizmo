@@ -1,3 +1,5 @@
+require 'net/ssh'
+
 require_relative './modules/package'
 require_relative './modules/service'
 require_relative './modules/user'
@@ -15,20 +17,27 @@ class Runner
   end
 
   def run()
-    ssh = nil
-    @manifest['actions'].each do |action|
-      puts "#{action['description']}"
-      case action['module'].downcase
-      when "package"
-        action['result'] = PackageModule.new(ssh, action['options']).execute
-      when "service"
-        action['result'] = ServiceModule.new(ssh, action['options']).execute
-      when "user"
-        action['result'] = UserModule.new(ssh, action['options']).execute
-      when "file"
-        action['result'] = FileModule.new(ssh, action['options']).execute
-      else
-        raise Exception.new("Unknown module!")
+    Net::SSH.start( @args[:host],
+                    @args[:user],
+                    :port => @args[:port],
+                    :password => @args[:password]
+                  ) do |session|
+
+      puts "SSH connection established to #{@args[:host]}"
+      @manifest['actions'].each do |action|
+        puts "#{action['description']}"
+        case action['module'].downcase
+        when "package"
+          action['result'] = PackageModule.new(session, action['options']).execute
+        when "service"
+          action['result'] = ServiceModule.new(session, action['options']).execute
+        when "user"
+          action['result'] = UserModule.new(session, action['options']).execute
+        when "file"
+          action['result'] = FileModule.new(session, action['options']).execute
+        else
+          raise Exception.new("Unknown module!")
+        end
       end
     end
   end

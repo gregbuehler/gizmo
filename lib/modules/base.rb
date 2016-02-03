@@ -4,8 +4,8 @@ class BaseModule
   @changed = false
   @success = true
 
-  def initialize(ssh=nil, options=nil)
-    @ssh = ssh
+  def initialize(session=nil, options=nil)
+    @session = session
     @options = options
   end
 
