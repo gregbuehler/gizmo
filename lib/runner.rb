@@ -1,4 +1,7 @@
 require_relative './modules/package'
+require_relative './modules/service'
+require_relative './modules/user'
+require_relative './modules/file'
 
 class Runner
   attr_accessor :args, :manifest
@@ -14,23 +17,17 @@ class Runner
   def run()
     @manifest['actions'].each do |action|
       puts "#{action['description']}"
-      case action['module']
+      case action['module'].downcase
       when "package"
         PackageModule.new(action['options']).execute
       when "service"
-        puts "\tModule: service"
-        command = "sudo service #{action['options']['name']} #{action['options']['state']}"
-        puts "\t\tRaw Command: #{command}"
+        ServiceModule.new(action['options']).execute
       when "user"
-        puts "\tModule: user"
-        command = "sudo useradd #{action['options']['name']}"
-        puts "\t\tRaw Command: #{command}"
+        UserModule.new(action['options']).execute
       when "file"
-        puts "\tModule: file"
-        puts "\t\tTODO"
+        FileModule.new(action['options']).execute
       else
-        puts "\tModule: Unknown"
-        puts "\t\tNOOP"
+        raise Exception.new("Unknown module!")
       end
     end
   end
