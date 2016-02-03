@@ -37,3 +37,4 @@ puts "Gizmo loading up!"
 g = Runner.new({:args => args, :manifest => manifest})
 g.prepare()
 g.run()
+g.result()

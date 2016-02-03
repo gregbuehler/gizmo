@@ -15,20 +15,25 @@ class Runner
   end
 
   def run()
+    ssh = nil
     @manifest['actions'].each do |action|
       puts "#{action['description']}"
       case action['module'].downcase
       when "package"
-        PackageModule.new(action['options']).execute
+        action['result'] = PackageModule.new(ssh, action['options']).execute
       when "service"
-        ServiceModule.new(action['options']).execute
+        action['result'] = ServiceModule.new(ssh, action['options']).execute
       when "user"
-        UserModule.new(action['options']).execute
+        action['result'] = UserModule.new(ssh, action['options']).execute
       when "file"
-        FileModule.new(action['options']).execute
+        action['result'] = FileModule.new(ssh, action['options']).execute
       else
         raise Exception.new("Unknown module!")
       end
     end
+  end
+
+  def result()
+    puts @manifest.to_json
   end
 end

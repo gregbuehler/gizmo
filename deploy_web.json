@@ -14,6 +14,14 @@
       }
     },
     {
+      "description": "ensure web server is enabled",
+      "module": "service",
+      "options": {
+        "state": "enable",
+        "name": "apache2"
+      }
+    },
+    {
       "description": "ensure web server is started",
       "module": "service",
       "options": {
@@ -35,7 +43,7 @@
       "options": {
         "group": "foo",
         "user": "foo",
-        "attributes": "664",
+        "permissions": "664",
         "files": [
           { "state": "absent", "file": "/var/www/index.html" },
           { "state": "sync", "file": "/var/www/index.php", "source": "index.php" }
