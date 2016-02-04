@@ -6,11 +6,24 @@
 
   "actions": [
     {
-      "description": "ensure web server with php interpreter is present",
+      "description": "ensure web server is present",
       "module": "package",
       "options": {
         "state": "present",
-        "name": "lamp-server^"
+        "packages": [
+          "apache2"
+        ]
+      }
+    },
+    {
+      "description": "ensure php is present",
+      "module": "package",
+      "options": {
+        "state": "present",
+        "packages": [
+          "php5",
+          "libapache2-mod-php5"
+        ]
       }
     },
     {
