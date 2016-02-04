@@ -1,4 +1,5 @@
 require 'net/ssh'
+require 'json'
 
 require_relative './modules/package'
 require_relative './modules/service'
@@ -22,27 +23,30 @@ class Runner
                     :port => @args[:port],
                     :password => @args[:password]
                   ) do |session|
-
+      @results = []
       puts "SSH connection established to #{@args[:host]}"
       @manifest['actions'].each do |action|
         puts "#{action['description']}"
         case action['module'].downcase
-        when "package"
-          action['result'] = PackageModule.new(session, action['options']).execute
-        when "service"
-          action['result'] = ServiceModule.new(session, action['options']).execute
-        when "user"
-          action['result'] = UserModule.new(session, action['options']).execute
-        when "file"
-          action['result'] = FileModule.new(session, action['options']).execute
-        else
-          raise Exception.new("Unknown module!")
+          when "package"
+            action['result'] = PackageModule.new(session, action['options']).execute
+          when "service"
+            action['result'] = ServiceModule.new(session, action['options']).execute
+          when "user"
+            action['result'] = UserModule.new(session, action['options']).execute
+          when "file"
+            action['result'] = FileModule.new(session, action['options']).execute
+          else
+            raise Exception.new("Unknown module!")
         end
+
+        @results.push(action)
+        break if (action["result"].nil? || action['result'] === "false")
       end
     end
   end
 
   def result()
-    puts @manifest.to_json
+    puts JSON.pretty_generate(@results)
   end
 end
