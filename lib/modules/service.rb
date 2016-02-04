@@ -4,10 +4,8 @@ class ServiceModule < BaseModule
   def execute
     # assume this changes for now
     @command = "sudo systemctl #{@options['state']} #{@options['name']}.service"
+    @output = @session.exec!(@command)
     @changed = true
-
-    # execute command capture, capture success
-    @success = @command
 
     {
       command: "#{@command}",
