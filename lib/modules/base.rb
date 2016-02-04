@@ -10,6 +10,11 @@ class BaseModule
   end
 
   def execute
-    {}
+    {
+      command: "#{@command}",
+      output: "#{@output}",
+      changed: "#{@changed}",
+      success: "#{@success}"
+    }
   end
 end
