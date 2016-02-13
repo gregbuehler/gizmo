@@ -3,9 +3,10 @@ require_relative "./base"
 class ServiceModule < BaseModule
   def execute
     # assume this changes for now
-    @command = "sudo systemctl #{@options['state']} #{@options['name']}.service"
+    @command = "sudo service #{@options['name']} #{@options['state']}"
     @output = @session.exec!(@command)
     @changed = true
+    @success = true
 
     {
       command: "#{@command}",
