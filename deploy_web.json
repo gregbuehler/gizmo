@@ -27,14 +27,6 @@
       }
     },
     {
-      "description": "ensure web server is enabled",
-      "module": "service",
-      "options": {
-        "state": "enable",
-        "name": "apache2"
-      }
-    },
-    {
       "description": "ensure web server is started",
       "module": "service",
       "options": {
@@ -51,16 +43,26 @@
       }
     },
     {
-      "description": "ensure content is current",
+      "description": "default index.html page does not exist",
       "module": "file",
       "options": {
         "group": "foo",
         "user": "foo",
         "permissions": "664",
-        "files": [
-          { "state": "absent", "file": "/var/www/index.html" },
-          { "state": "sync", "file": "/var/www/index.php", "source": "index.php" }
-        ]
+        "state": "absent",
+        "file": "/var/www/html/index.html"
+      }
+    },
+    {
+      "description": "our index.php is current",
+      "module": "file",
+      "options": {
+        "group": "foo",
+        "user": "foo",
+        "permissions": "664",
+        "state": "sync",
+        "file": "/var/www/html/index.php",
+        "source": "index.php"
       }
     }
   ]

@@ -1,5 +1,5 @@
 #!/usr/bin/ruby
-
+require 'net/scp'
 require 'optparse'
 require 'json'
 

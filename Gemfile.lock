@@ -1,12 +1,15 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
     net-ssh (3.0.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  net-scp
   net-ssh
 
 BUNDLED WITH
